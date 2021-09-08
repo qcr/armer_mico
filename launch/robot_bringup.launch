@@ -1,0 +1,55 @@
+<?xml version="1.0" ?>
+<launch>
+    <arg name="config"/>
+    <arg name="sim" default="false" />
+
+    <!-- Physical Robot -->
+    <group unless="$(arg sim)">
+
+      <!-- Manipulator driver -->
+      
+      <arg name="use_urdf" default="true"/>
+      <arg name="kinova_robotType" default="m1n6s200" />
+      <arg name="kinova_robotName" default="$(arg kinova_robotType)"/>
+      <arg name="kinova_robotSerial" default="not_set" />
+      <arg name="use_jaco_v1_fingers" default="false" />
+      <arg name="feedback_publish_rate" default="0.1" />
+
+      <node name="$(arg kinova_robotName)_driver" pkg="kinova_driver" type="kinova_arm_driver" output="screen" cwd="node" args="$(arg kinova_robotType)">
+        <rosparam file="$(find kinova_bringup)/launch/config/robot_parameters.yaml" command="load" />
+        <param name="serial_number" value="$(arg kinova_robotSerial)" />   
+        <param name="robot_name" value="$(arg kinova_robotName)" />   
+        <param name="robot_type" value="$(arg kinova_robotType)" />   
+        <param name="use_jaco_v1_fingers" value="$(arg use_jaco_v1_fingers)" />   
+        <param name="status_interval_seconds" value="$(arg feedback_publish_rate)" />
+      </node>
+      
+    <group unless="$(arg use_urdf)">
+      <node name="$(arg kinova_robotName)_tf_updater" pkg="kinova_driver" type="kinova_tf_updater" output="screen" cwd="node" args="$(arg kinova_robotType)">
+        <remap from="/$(arg kinova_robotName)_tf_updater/in/joint_angles" to="/$(arg kinova_robotName)_driver/out/joint_angles"/>
+        <param name="base_frame" value="root"/>
+      </node>
+    </group>
+
+    <group if="$(arg use_urdf)">
+      <param name="robot_description" command="$(find xacro)/xacro '$(find kinova_description)/urdf/$(arg kinova_robotType)_standalone.xacro'" />
+      <node name="$(arg kinova_robotName)_state_publisher"
+            pkg="robot_state_publisher"
+            type="robot_state_publisher">
+        <remap from="/joint_states" to="/$(arg kinova_robotName)_driver/out/joint_state"/>
+      </node>
+    </group>
+
+        <!-- Launch armer driver -->
+        <include file="$(find armer)/launch/armer.launch">
+            <arg name="config" value="$(arg config)" />
+        </include>
+    </group>
+
+    <!-- Simulated Robot -->
+    <group if="$(arg sim)">
+        <include file="$(find armer)/launch/armer.launch">
+            <arg name="config" value="$(arg config)" />
+        </include>
+    </group>
+</launch>
