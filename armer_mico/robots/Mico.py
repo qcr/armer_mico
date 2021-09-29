@@ -25,9 +25,7 @@ class MicoROSRobot(ROSRobot):
             '/m1n4s200_driver/in/joint_velocity',
             JointVelocity,
             queue_size=1
-        )
-        rate=rospy.Rate(100)
-    
+        ) 
 
     def publish(self):
         mico_msg=JointVelocity()
@@ -35,7 +33,7 @@ class MicoROSRobot(ROSRobot):
         mico_msg.joint2=self.qd[1]
         mico_msg.joint3=self.qd[2]
         mico_msg.joint4=self.qd[3]
-        mico_msg.joint5=self.qd[0]
+        mico_msg.joint5=0
         mico_msg.joint6=0
         mico_msg.joint7=0
         
