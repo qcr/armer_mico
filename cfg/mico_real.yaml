@@ -1,9 +1,10 @@
 robots:
   - name: arm 
-    model: roboticstoolbox.models.Mico
-    joint_state_topic: /m1n6s200_driver/out/joint_state
-    joint_velocity_topic:  /m1n6s200_driver/in/joint_velocity
-    gripper: "j2n4s300_end_effector"
+    model: armer_mico.models.Mico
+    type: armer_mico.robots.MicoROSRobot
+    joint_state_topic: /m1n4s200_driver/out/joint_state
+    # joint_velocity_topic:  /m1n4s200_driver/in/joint_velocity
+    gripper: "m1n4s200_end_effector"
 backend: 
   type: armer.backends.ROS.ROS
 logging: 
