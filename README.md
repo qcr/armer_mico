@@ -19,18 +19,23 @@ It interfaces with the [Mico drivers](https://github.com/Kinovarobotics/kinova-r
 ```
 cd ~/armer_ws/src
 git clone https://github.com/Kinovarobotics/kinova-ros.git kinova-ros
+cd kinova-ros
+rm -r kinova_moveit
+rm -r kinova_gazebo
 ```
 
 2. Setup arm permissions
 
 To access the arm via usb copy the udev rule file 10-kinova-arm.rules from ~/catkin_ws/src/kinova-ros/kinova_driver/udev to /etc/udev/rules.d/:
 ```
+
 sudo cp kinova_driver/udev/10-kinova-arm.rules /etc/udev/rules.d/
 ```
 3. Install dependencies and build workspace
 ```
 sudo apt update 
 rosdep update 
+cd ~/armer_ws
 rosdep install --from-paths src --ignore-src -y
 catkin_make
 echo "Completed dependency install"
@@ -42,6 +47,7 @@ The following code snippet will download the Armer Mico hardware package to work
 ```
 cd ~/armer_ws
 git clone https://github.com/qcr/armer_mico.git src/armer_mico
+cd ~/armer_ws
 rosdep install --from-paths src --ignore-src -r -y 
 catkin_make 
 ```
