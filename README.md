@@ -47,7 +47,6 @@ The following code snippet will download the Armer Mico hardware package to work
 ```
 cd ~/armer_ws
 git clone https://github.com/qcr/armer_mico.git src/armer_mico
-cd ~/armer_ws
 rosdep install --from-paths src --ignore-src -r -y 
 catkin_make 
 ```
