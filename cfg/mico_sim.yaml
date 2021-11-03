@@ -3,9 +3,9 @@ robots:
     model: armer_mico.models.Mico
     joint_state_topic: /joint_states 
     joint_velocity_topic:  /joint_group_velocity_controller/joint_velocity 
-    gripper: 'm1n4s000_link_4'
+    gripper: 'm1n4s200_link_4'
 backend: 
-  type: roboticstoolbox.backends.Swift.Swift
+  type: roboticstoolbox.backends.swift.Swift
 
 logging: 
   frequency: false
