@@ -58,14 +58,14 @@ roslaunch armer_mico robot_bringup.launch
  By default this will launch to control a physical Mico. To run a Swift simulation the sim parameter can be set to true. For example:
 
 ```sh
-roslaunch armer_ur robot_bringup.launch sim:=true
+roslaunch armer_mico robot_bringup.launch sim:=true
 ```
 
 To run on a real robot:
 
 
 ```sh
-roslaunch armer_ur robot_bringup.launch config:=path_to_/armer_mico/cfg/mico_real.yaml
+roslaunch armer_mico robot_bringup.launch config:=path_to_/armer_mico/cfg/mico_real.yaml
 
 ```
 
